@@ -1,14 +1,13 @@
 const sprites = new Image();
-sprites.src = './img/sprites.png';
-let frames = 0;
 const somHit = new Audio();
+const somFly = new Audio();
+sprites.src = './img/sprites.png';
+somFly.src = './sons/flying.wav';
 somHit.src = './sons/hit.wav';
 const canvas = document.querySelector('canvas');
 const contexto = canvas.getContext('2d');
-
-
-// Canos
-function criarCanos() {
+let frames = 0;
+function criarCanos() { // Função para criar os canos
     const canos = {
         largura: 52,
         altura: 400,
@@ -53,7 +52,6 @@ function criarCanos() {
                     y: canoChaoY
                 }
             });
-            // ----------------- Cano do céu -------------
         },
         TemColisaoFlappyBird(par) {
             const cabecaFlappy = globais.flappyBird.y;
@@ -92,9 +90,7 @@ function criarCanos() {
     }
     return canos;
 }
-
-// Plano de fundo
-const planoDeFundo = {
+const planoDeFundo = { // Desenhar plano de fundo
     spriteX: 398,
     spriteY: 0,
     largura: 275,
@@ -121,8 +117,7 @@ const planoDeFundo = {
           );
     }
 }
-// Chão
-function criarChao() {
+function criarChao() { // Função para criar o chão
     const chao = {
         spriteX: 0,
         spriteY: 610,
@@ -134,9 +129,6 @@ function criarChao() {
             const movimentoChao = 1;
             const repeteEm = chao.largura / 2;
             const movimentacao = chao.x - movimentoChao;
-            // console.log(`chao x: ${chao.x}`);
-            // console.log(`repete em: ${repeteEm}`);
-            // console.log(`Calculo maluco ${chao.x}`);
             chao.x = movimentacao % repeteEm;
         },
         desenhar() {
@@ -159,7 +151,6 @@ function criarChao() {
     }
     return chao;
 }
-
 function fazColisao(flappyBird, chao) {
     const flappyBirdY = flappyBird.y + flappyBird.altura;
     const chaoY = chao.y;
@@ -169,8 +160,7 @@ function fazColisao(flappyBird, chao) {
         return false;
     }
 }
-// Flappy Bird
-function criarFlappyBird() {
+function criarFlappyBird() { // Função para criar o Flappy Bird
     const flappyBird = {
         spriteX: 0,
         spriteY: 0,
@@ -181,6 +171,7 @@ function criarFlappyBird() {
         pulo: 4.6,
         pular() {
             flappyBird.velocidade = - flappyBird.pulo;
+            somFly.play();
         },
         gravidade: 0.25,
         velocidade: 0,
@@ -229,23 +220,23 @@ function criarFlappyBird() {
     return flappyBird;
 }
 const mensagemGetReady = {
-    sX: 134,
-    sY: 0,
-    w: 134,
-    h: 152,
-    x: (canvas.width / 2) - 174 /2,
-    y: 50,
-    desenhar() {
+		sX: 134,
+		sY: 0,
+		w: 134,
+		h: 152,
+		x: (canvas.width / 2) - 174 /2,
+		y: 50,
+    	desenhar() {
         contexto.drawImage(
             sprites,
             mensagemGetReady.sX, mensagemGetReady.sY,
             mensagemGetReady.w, mensagemGetReady.h,
             mensagemGetReady.x, mensagemGetReady.y,
             mensagemGetReady.w, mensagemGetReady.h
-            )
-        }
-}
-//Telas
+         )
+      }
+   }
+ /* ------ Telas do jogo --------- */
 const globais = {};
 let telaAtiva = {};
 function mudarParaTela(novaTela) {
@@ -293,11 +284,9 @@ telas.jogo = {
         globais.flappyBird.pular();
     }
 };
-// loop
-function loop() {
+function loop() { // Função para exibir os frames a cadas segundo na tela
     telaAtiva.desenhar();
     telaAtiva.atualizar();
-    
     frames += 1;
     requestAnimationFrame(loop);
 }
