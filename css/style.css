@@ -1,14 +1,25 @@
 @charset "UTF-8";
 
 body {
+    align-self: center;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+div#content {
+    width: 320px;
+    height: 480px;
+}
 canvas {
     border: 1px solid #000;
     display: block;
     margin: 0 auto;
+}
+div#placar {
+    font-weight: bolder;
+    /* color: aliceblue; */
+    margin-top: -510px;
+    margin-left: 260px;
+    font-size: 20pt;
 }
